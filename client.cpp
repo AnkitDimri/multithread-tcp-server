@@ -7,8 +7,7 @@
 #include <arpa/inet.h>
 #include <signal.h>
 
-#define MAX 80
-#define PORT 50020
+#define PORT 1721
 #define SA struct sockaddr
 
  struct msg {
