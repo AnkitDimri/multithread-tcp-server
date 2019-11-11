@@ -12,8 +12,17 @@
 #include <signal.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <fstream>
 
- pthread_t thread [100];
+#define PORT 1721
+
+ pthread_t thread_tcp [100], thread_file [10];
+ int threadno_tcp = 0, threadno_fw = 0;
+
+ struct msg {
+     char filename [100];
+     char word [20];
+ };
 
  /* Structure to hold the necessary parameters to pass into the threaded reverse_string function */
  struct req {
@@ -22,6 +31,9 @@
      socklen_t addlen;
      sockaddr_in clientaddr;
  };
+
+ void* find_word (void*);
+ void* tcp_connection (void*);
 
  int main(int argc, char const *argv[]) {
 
@@ -35,7 +47,7 @@
    char buf [2048]; // Hold buffer sent in udp packet
 
    /* Create socket */
-   if ((fd = socket (AF_INET, SOCK_DGRAM, 0)) == -1) {
+   if ((mistfd = socket (AF_INET, SOCK_DGRAM, 0)) == -1) {
        std::cout << "\n\t Socket creation failed...\n\t Exiting..." << '\n';
        return 0;
    }
@@ -45,17 +57,17 @@
    memset ((sockaddr*)&mistaddr, 0, sizeof (mistaddr));
    mistaddr.sin_family = AF_INET;   // IPv4 address family
    mistaddr.sin_addr.s_addr = htonl (INADDR_ANY);  // Give the local machine address
-   mistaddr.sin_port = htons (1721); // Port at which server listens to the requests
+   mistaddr.sin_port = htons (PORT); // Port at which server listens to the requests
 
    /* Bind the IP address and the port number to craete the socket */
-   if (bind (fd, (sockaddr*)&mistaddr, sizeof (mistaddr)) == -1) {
+   if (bind (mistfd, (sockaddr*)&mistaddr, sizeof (mistaddr)) == -1) {
        std::cout << "\n\t Binding failed...\n\t Exiting..." << '\n';
        return 0;
    }
 
    std::cout << "\n\t Binding succesful..." << '\n';
 
-   if (listen (mistfd, 5) != 0) {
+   if (listen (mistfd, 100) != 0) {
       std::cout << "\n\t Server not listning..." << '\n';
       return 0;
    }
@@ -64,7 +76,8 @@
 
    while (1) {
 
-      if (accept(sockfd,(sockaddr_in*)&clientaddr, &addrlen) < 0)
+      int connfd;
+      if ((connfd = accept(mistfd,(sockaddr*)&clientaddr, &addrlen)) < 0)
          std::cout << "\n\t Client connection declined..." << '\n';
       else
          std::cout << "\n\t Client connection accepted..." << '\n';
@@ -74,12 +87,23 @@
       bzero (r, sizeof (req));  // Clear memory
       r->addlen = addrlen;
       r->clientaddr = clientaddr;
-      r->des = mistfd;
+      r->des = connfd;
 
-      pthread_create (&thread [threadno++], NULL, find_word, (void*)r);
-      if (threadno == 100)
-          threadno = 0;
+      pthread_create (&thread_tcp [threadno_tcp++], NULL, tcp_connection, (void*)r);
+      if (threadno_tcp == 100)
+          threadno_tcp = 0;
 
    }
+
+ }
+
+ void* tcp_connection (void*  arg) {
+     req sock = *((req*)arg);
+     msg buffer;
+
+     while (1) {
+       read(sock.des, &buffer, sizeof(buffer));
+
+     }
 
  }
