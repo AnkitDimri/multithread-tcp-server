@@ -8,11 +8,12 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <math.h>
 #include <signal.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <fstream>
+#include <string>
+#include <cstring>
 
 #define PORT 1721
 
@@ -102,8 +103,19 @@
      msg buffer;
 
      while (1) {
-       read(sock.des, &buffer, sizeof(buffer));
+       read (sock.des, &buffer, sizeof(buffer));
 
+       std::ifstream file;
+       std::string word;
+       file.open (buffer.filename);
+       bool flag = 0;
+       while (file >> word)
+         if (strcmp (word.c_str(), buffer.word) == 0)
+            flag = 1;
+
+       file.close ();
+
+       write (sock.des, &flag, sizeof (flag));
      }
 
  }
