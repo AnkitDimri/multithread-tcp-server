@@ -13,13 +13,22 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
- pthread_t threads [100]; 
+ pthread_t thread [100];
+
+ /* Structure to hold the necessary parameters to pass into the threaded reverse_string function */
+ struct req {
+     int des;
+     char str [2048];
+     socklen_t addlen;
+     sockaddr_in clientaddr;
+ };
 
  int main(int argc, char const *argv[]) {
 
    /* server name : Misty */
    sockaddr_in mistaddr; // server address
    sockaddr_in clientaddr; // client address
+   int mistfd; // server file descriptor
 
    socklen_t addrlen = sizeof(clientaddr);
    int recvlen, msgcnt = 0;
@@ -44,6 +53,33 @@
        return 0;
    }
 
-   std::cout << "\n\t Binding succesful" << '\n';
+   std::cout << "\n\t Binding succesful..." << '\n';
+
+   if (listen (mistfd, 5) != 0) {
+      std::cout << "\n\t Server not listning..." << '\n';
+      return 0;
+   }
+
+   std::cout << "\n\t Server listning..." << '\n';
+
+   while (1) {
+
+      if (accept(sockfd,(sockaddr_in*)&clientaddr, &addrlen) < 0)
+         std::cout << "\n\t Client connection declined..." << '\n';
+      else
+         std::cout << "\n\t Client connection accepted..." << '\n';
+
+      /* Filling the parameter values of the threaded function */
+      req *r = new req;  // allocate memory
+      bzero (r, sizeof (req));  // Clear memory
+      r->addlen = addrlen;
+      r->clientaddr = clientaddr;
+      r->des = mistfd;
+
+      pthread_create (&thread [threadno++], NULL, find_word, (void*)r);
+      if (threadno == 100)
+          threadno = 0;
+
+   }
 
  }
