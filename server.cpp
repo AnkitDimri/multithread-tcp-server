@@ -48,7 +48,7 @@
    char buf [2048]; // Hold buffer sent in udp packet
 
    /* Create socket */
-   if ((mistfd = socket (AF_INET, SOCK_DGRAM, 0)) == -1) {
+   if ((mistfd = socket (AF_INET, SOCK_STREAM, 0)) == -1) {
        std::cout << "\n\t Socket creation failed...\n\t Exiting..." << '\n';
        return 0;
    }
@@ -61,14 +61,14 @@
    mistaddr.sin_port = htons (PORT); // Port at which server listens to the requests
 
    /* Bind the IP address and the port number to craete the socket */
-   if (bind (mistfd, (sockaddr*)&mistaddr, sizeof (mistaddr)) == -1) {
+   if (bind (mistfd, (sockaddr*)&mistaddr, sizeof (mistaddr)) != 0) {
        std::cout << "\n\t Binding failed...\n\t Exiting..." << '\n';
        return 0;
    }
 
    std::cout << "\n\t Binding succesful..." << '\n';
 
-   if (listen (mistfd, 100) != 0) {
+   if ((listen (mistfd, 5)) != 0) {
       std::cout << "\n\t Server not listning..." << '\n';
       return 0;
    }
