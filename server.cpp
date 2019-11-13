@@ -44,7 +44,7 @@
 
  int main(int argc, char const *argv[]) {
 
-   /* server name : Misty */
+   /* server name : Mistcp */
    sockaddr_in mistaddr; // server address
    sockaddr_in clientaddr; // client address
    int mistfd; // server file descriptor
