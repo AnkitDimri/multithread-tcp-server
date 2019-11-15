@@ -60,7 +60,7 @@
      int sockfd, connfd;
 	   sockaddr_in servaddr, cli ;
 
-	   // socket create and varification
+	   /* socket create and varification */
 	   sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	   if (sockfd == -1) {
 		     printf("socket creation failed...\n");
@@ -79,7 +79,7 @@
 
 
 
-	   // connect the client socket to server socket
+	   /* connect the client socket to server socket */
 	   if (connect(sockfd, (SA*)&servaddr, sizeof(servaddr)) != 0) {
 		   printf("connection with the server failed...\n");
 		   exit(0);
