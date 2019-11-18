@@ -29,7 +29,7 @@
      char word [20];
  };
 
- /* Structure to hold the necessary parameters to pass into the threaded reverse_string function */
+ /* Structure to hold the necessary parameters to pass into the threaded function */
  struct req {
      int des;
      char str [2048];
