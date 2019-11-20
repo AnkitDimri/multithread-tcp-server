@@ -23,7 +23,7 @@
  };
 
  /* Signal handlre for ctrl+c to terminate the infinite client properly by closing the socket */
- /*void sig_handler(int signo) {
+ void sig_handler(int signo) {
 
      /* signal handler *
      if (signo == SIGINT) {
@@ -31,7 +31,7 @@
          close (fd);
          exit (1);
      }
- }*/
+ }
 
  void func(int sockfd) {
 	msg buffer;
