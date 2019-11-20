@@ -25,7 +25,7 @@
  /* Signal handlre for ctrl+c to terminate the infinite client properly by closing the socket */
  void sig_handler(int signo) {
 
-     /* signal handler *
+     /* signal handler */
      if (signo == SIGINT) {
          std::cout << "\t Exiting..." << '\n';
          close (fd);
