@@ -19,8 +19,8 @@
 #include <string>
 #include <cstring>
 
-#define PORT 1721
 
+#define PORT 1721
  pthread_t thread_tcp [100], thread_file [10];
  int threadno_tcp = 0, threadno_fw = 0;
 
@@ -39,6 +39,17 @@
 
  void* find_word (void*);
  void* tcp_connection (void*);
+
+ /* Signal handlre for ctrl+c to terminate the infinite server properly by closing the socket */
+ void sig_handler(int signo) {
+
+     /* signal handler */
+     if (signo == SIGINT) {
+         std::cout << "\t Exiting..." << '\n';
+         close (fd);
+         exit (1);
+     }
+ }
 
  int main(int argc, char const *argv[]) {
 
