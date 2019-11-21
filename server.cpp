@@ -118,18 +118,23 @@
      msg buffer;
 
      while (1) {
+       /* Read the packet sent by the established client */
        read (sock.des, &buffer, sizeof(buffer));
 
+       /* file handlers */
        std::ifstream file;
        std::string word;
        file.open (buffer.filename);
        bool flag = 0;
+
+       /* Linear search in file to find the word */
        while (file >> word)
          if (strcmp (word.c_str(), buffer.word) == 0)
             flag = 1;
 
        file.close ();
 
+       /* Send the result packet back to the eestablished client */
        write (sock.des, &flag, sizeof (flag));
      }
 
