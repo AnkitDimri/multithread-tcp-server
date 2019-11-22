@@ -18,11 +18,12 @@
 #include <fstream>
 #include <string>
 #include <cstring>
-
-
+#include <signal.h>
 #define PORT 1721
+
  pthread_t thread_tcp [100], thread_file [10];
  int threadno_tcp = 0, threadno_fw = 0;
+ int mistfd; // server file descriptor
 
  struct msg {
      char filename [100];
@@ -32,7 +33,6 @@
  /* Structure to hold the necessary parameters to pass into the threaded function */
  struct req {
      int des;
-     char str [2048];
      socklen_t addlen;
      sockaddr_in clientaddr;
  };
@@ -46,8 +46,8 @@
      /* signal handler */
      if (signo == SIGINT) {
          std::cout << "\t Exiting..." << '\n';
-         close (fd);
-         exit (1);
+         close (mistfd);
+         exit (0);
      }
  }
 
@@ -56,11 +56,8 @@
    /* server name : Mistcp */
    sockaddr_in mistaddr; // server address
    sockaddr_in clientaddr; // client address
-   int mistfd; // server file descriptor
 
    socklen_t addrlen = sizeof(clientaddr);
-   int recvlen, msgcnt = 0;
-   char buf [2048]; // Hold buffer sent in udp packet
 
    /* Create socket */
    if ((mistfd = socket (AF_INET, SOCK_STREAM, 0)) == -1) {
