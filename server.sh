@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# @author: Ankit Dimri
+# Shell script to start the server MISTCP
+
 # Compile server code and run
 echo
 echo "Compiling server.cpp..."
