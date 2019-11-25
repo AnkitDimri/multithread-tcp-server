@@ -51,14 +51,19 @@
         char c;
         int i = 0;
 
-        while (file.eof () != 0) {
+        while (!file.eof ()) {
             file.get (c);
+            //std::cout << c << ' ';
             buffer.file [i] = c;
+            i++;
         }
 
     		write (sockfd, &buffer, sizeof(buffer));
 
         std::cout << "\n\t File read and sent to the server..." << '\n';
+
+        std::cout << "\n\t file: " << '\n';
+        std::cout << buffer.file << '\n';
         /*bool flag;
     		read(sockfd, &flag, sizeof(flag));
     		printf("From server :\n");
