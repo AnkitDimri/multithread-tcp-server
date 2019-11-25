@@ -13,13 +13,14 @@
 #include <stdio.h>
 #include <arpa/inet.h>
 #include <signal.h>
+#include <ifstream.h>
 
 #define PORT 1721
 #define SA struct sockaddr
 
  struct msg {
      char filename [100];
-     char word [20];
+     char file [2048];
  };
 
  /* Signal handlre for ctrl+c to terminate the infinite client properly by closing the socket */
@@ -34,25 +35,38 @@
  }
 
  void func(int sockfd) {
-	msg buffer;
-	for (;;) {
-		memset (buffer.filename, 0, sizeof (buffer.filename));
-    memset (buffer.word, 0, sizeof (buffer.word));
-	  std::cout << "\n\t Enter the filename: ";
-		std::cin >> buffer.filename;
-    std::cout << "\n\t Enter the word: ";
-    std::cin >> buffer.word;
-		write (sockfd, &buffer, sizeof(buffer));
 
-    bool flag;
-		read(sockfd, &flag, sizeof(flag));
-		printf("From server :\n");
+    	msg buffer;
+    	for (;;) {
+    		memset (buffer.filename, 0, sizeof (buffer.filename));
+        memset (buffer.file, '\0', sizeof (buffer.file));
+    	  std::cout << "\n\t Enter the filename: ";
+    		std::cin >> buffer.filename;
 
-    if (flag)
-      std::cout << "\n\t Word found!" << '\n';
-    else
-      std::cout << "\n\t Word not found!" << '\n';
-	}
+        ifstream file;
+        file.open (buffer.filename);
+        file.seekg (0);
+        char c;
+        int i = 0;
+
+        while (file.eof () != 0) {
+            file.get (c);
+            buffer.file [i] = c;
+        }
+
+    		write (sockfd, &buffer, sizeof(buffer));
+
+        std::cout << "\n\t File read and sent to the server..." << '\n';
+        bool flag;
+    		read(sockfd, &flag, sizeof(flag));
+    		printf("From server :\n");
+
+        if (flag)
+          std::cout << "\n\t Word found!" << '\n';
+        else
+          std::cout << "\n\t Word not found!" << '\n';
+    	}
+
 }
 
  int main(int argc, char const *argv[]) {
