@@ -57,14 +57,14 @@
     		write (sockfd, &buffer, sizeof(buffer));
 
         std::cout << "\n\t File read and sent to the server..." << '\n';
-        bool flag;
+        /*bool flag;
     		read(sockfd, &flag, sizeof(flag));
     		printf("From server :\n");
 
         if (flag)
           std::cout << "\n\t Word found!" << '\n';
         else
-          std::cout << "\n\t Word not found!" << '\n';
+          std::cout << "\n\t Word not found!" << '\n';*/
     	}
 
 }
