@@ -27,7 +27,7 @@
 
  struct msg {
      char filename [100];
-     char word [20];
+     char file [2048];
  };
 
  /* Structure to hold the necessary parameters to pass into the threaded function */
@@ -118,21 +118,8 @@
        /* Read the packet sent by the established client */
        read (sock.des, &buffer, sizeof(buffer));
 
-       /* file handlers */
-       std::ifstream file;
-       std::string word;
-       file.open (buffer.filename);
-       bool flag = 0;
-
-       /* Linear search in file to find the word */
-       while (file >> word)
-         if (strcmp (word.c_str(), buffer.word) == 0)
-            flag = 1;
-
-       file.close ();
-
-       /* Send the result packet back to the eestablished client */
-       write (sock.des, &flag, sizeof (flag));
+       std::cout << "\n\t File name: " << buffer.filename;
+       std::cout << "\n\n" << buffer.file << '\n';
      }
 
  }
