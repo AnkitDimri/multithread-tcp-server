@@ -13,10 +13,12 @@
 #include <stdio.h>
 #include <arpa/inet.h>
 #include <signal.h>
-#include <ifstream.h>
+#include <fstream>
 
 #define PORT 1721
 #define SA struct sockaddr
+
+ int sockfd;
 
  struct msg {
      char filename [100];
@@ -29,7 +31,7 @@
      /* signal handler */
      if (signo == SIGINT) {
          std::cout << "\t Exiting..." << '\n';
-         close (fd);
+         close (sockfd);
          exit (1);
      }
  }
@@ -43,7 +45,7 @@
     	  std::cout << "\n\t Enter the filename: ";
     		std::cin >> buffer.filename;
 
-        ifstream file;
+        std::ifstream file;
         file.open (buffer.filename);
         file.seekg (0);
         char c;
@@ -71,7 +73,6 @@
 
  int main(int argc, char const *argv[]) {
 
-     int sockfd, connfd;
 	   sockaddr_in servaddr, cli ;
 
 	   /* socket create and varification */
