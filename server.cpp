@@ -13,7 +13,6 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
 #include <fstream>
 #include <string>
