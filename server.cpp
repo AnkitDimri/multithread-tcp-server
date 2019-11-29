@@ -21,7 +21,7 @@
 #define PORT 1721
 
  pthread_t thread_tcp [100], thread_file [10];
- int threadno_tcp = 0, threadno_fw = 0;
+ int threadno_tcp = 0;
  int mistfd; // server file descriptor
 
  struct msg {
