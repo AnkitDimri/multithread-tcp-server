@@ -42,7 +42,7 @@
  void func(int sockfd) {
 
     	msg buffer;
-    	for (;;) {
+    	while (1) {
     		memset (buffer.filename, 0, sizeof (buffer.filename));
         memset (buffer.file, '\0', sizeof (buffer.file));
     	  std::cout << "\n\t Enter the filename: ";
