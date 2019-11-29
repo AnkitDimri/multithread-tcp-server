@@ -15,17 +15,20 @@
 #include <signal.h>
 #include <fstream>
 
+/* port at which the server operates */
 #define PORT 1721
 #define SA struct sockaddr
 
+ /* Socket file descriptor */
  int sockfd;
 
+ /* Structure of the message that will be sent to the server */
  struct msg {
      char filename [100];
      char file [2048];
  };
 
- /* Signal handlre for ctrl+c to terminate the infinite client properly by closing the socket */
+ /* Signal handler for ctrl+c to terminate the infinite client properly by closing the socket */
  void sig_handler(int signo) {
 
      /* signal handler */
@@ -64,14 +67,7 @@
 
         std::cout << "\n\t file: " << '\n';
         std::cout << buffer.file << '\n';
-        /*bool flag;
-    		read(sockfd, &flag, sizeof(flag));
-    		printf("From server :\n");
 
-        if (flag)
-          std::cout << "\n\t Word found!" << '\n';
-        else
-          std::cout << "\n\t Word not found!" << '\n';*/
     	}
 
 }
