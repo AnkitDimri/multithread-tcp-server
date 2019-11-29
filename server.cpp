@@ -24,6 +24,7 @@
  int threadno_tcp = 0;
  int mistfd; // server file descriptor
 
+ /* message type that will be sent by the client through TCP connection */
  struct msg {
      char filename [100];
      char file [2048];
@@ -36,7 +37,6 @@
      sockaddr_in clientaddr;
  };
 
- void* find_word (void*);
  void* tcp_connection (void*);
 
  /* Signal handlre for ctrl+c to terminate the infinite server properly by closing the socket */
