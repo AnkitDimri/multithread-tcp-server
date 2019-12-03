@@ -14,5 +14,17 @@ echo "client.cpp compiled..."
 echo
 echo "Starting client..."
 echo
+
+count=0
+ps_running=$(pidof client)
+for pids in $ps_running
+do
+  count=`expr $count + 1`
+done
+
+count=`expr $count + 1`
+
+echo "Starting client $count ..."
+
 #run the object file
 ./client
