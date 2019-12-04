@@ -18,6 +18,8 @@
 #include <string>
 #include <cstring>
 #include <signal.h>
+
+/* Server port number, at which it listens */
 #define PORT 1721
 
  pthread_t thread_tcp [100], thread_file [10];
