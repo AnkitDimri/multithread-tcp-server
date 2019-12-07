@@ -48,7 +48,7 @@
      if (signo == SIGINT) {
          std::cout << "\t Exiting..." << '\n';
          close (mistfd);
-         exit (0);
+         exit (1);
      }
  }
 
@@ -85,6 +85,10 @@
       std::cout << "\n\t Server not listning..." << '\n';
       return 0;
    }
+
+   /* Signal catching */
+     signal(SIGINT, sig_handler);
+     signal(SIGTSTP, sig_handler);
 
    std::cout << "\n\t Server listning..." << '\n';
 
