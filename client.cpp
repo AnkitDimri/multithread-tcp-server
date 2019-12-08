@@ -56,7 +56,6 @@
 
         while (!file.eof ()) {
             file.get (c);
-            //std::cout << c << ' ';
             buffer.file [i] = c;
             i++;
         }
@@ -103,7 +102,6 @@
 	   else
 		   printf("connected to the server..\n");
 	   func(sockfd);
-	   close(sockfd);
 
      return 0;
  }
