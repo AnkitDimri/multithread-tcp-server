@@ -42,6 +42,11 @@
  void func(int sockfd) {
 
     	msg buffer;
+
+      /* Signal catching */
+        signal(SIGINT, sig_handler);
+        signal(SIGTSTP, sig_handler);
+        
     	while (1) {
     		memset (buffer.filename, 0, sizeof (buffer.filename));
         memset (buffer.file, '\0', sizeof (buffer.file));
