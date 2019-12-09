@@ -1,7 +1,7 @@
 /*****************************************************************************************************************************************
  *                                                                                                                                       *
  *  @author: Ankit Dimri                                                                                                                 *
- *  TCP client                                                                                                                           *
+ *  TCP client which sends the file name and the file to the server                                                                      *
  *                                                                                                                                       *
  *****************************************************************************************************************************************/
 
@@ -46,7 +46,7 @@
       /* Signal catching */
         signal(SIGINT, sig_handler);
         signal(SIGTSTP, sig_handler);
-        
+
     	while (1) {
     		memset (buffer.filename, 0, sizeof (buffer.filename));
         memset (buffer.file, '\0', sizeof (buffer.file));
