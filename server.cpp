@@ -2,6 +2,7 @@
  *                                                                                                                                       *
  *  @author: Ankit Dimri                                                                                                                 *
  *  Multithreaded TCP server. Server name 'MISTCP'                                                                                       *
+ *  Server recieves a file and displays it. The server connects to each client using TCP protocol in isolted thread for each client      *
  *                                                                                                                                       *
  *****************************************************************************************************************************************/
 
