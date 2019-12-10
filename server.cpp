@@ -90,11 +90,15 @@
    }
 
    /* Signal catching */
-     signal(SIGINT, sig_handler);
-     signal(SIGTSTP, sig_handler);
+   signal(SIGINT, sig_handler);
+   signal(SIGTSTP, sig_handler);
 
    std::cout << "\n\t Server listning..." << '\n';
 
+   /*
+    * Infinite Server listning loop
+    * which creates a seperate thread for each connection established
+    */
    while (1) {
 
       int connfd;
