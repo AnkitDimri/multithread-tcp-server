@@ -40,7 +40,7 @@
      }
  }
 
- void func(int sockfd) {
+ void connection (int sockfd) {
 
     	msg buffer;
 
@@ -107,7 +107,6 @@
 	   }
 	   else
 		   printf("connected to the server..\n");
-	   func(sockfd);
+	   connection (sockfd);
 
-     return 0;
  }
