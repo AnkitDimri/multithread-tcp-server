@@ -40,6 +40,7 @@
      }
  }
 
+ /* Function called once the connection with the server is established */
  void connection (int sockfd) {
 
     	msg buffer;
@@ -48,6 +49,7 @@
       signal(SIGINT, sig_handler);
       signal(SIGTSTP, sig_handler);
 
+      /* Infinite loop */
     	while (1) {
     		memset (buffer.filename, 0, sizeof (buffer.filename));
         memset (buffer.file, '\0', sizeof (buffer.file));
@@ -107,6 +109,8 @@
 	   }
 	   else
 		   printf("connected to the server..\n");
+
+     /* Infinite loop functions which terminated by keyboard interrupt */
 	   connection (sockfd);
 
  }
