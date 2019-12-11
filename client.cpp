@@ -45,8 +45,8 @@
     	msg buffer;
 
       /* Signal catching */
-        signal(SIGINT, sig_handler);
-        signal(SIGTSTP, sig_handler);
+      signal(SIGINT, sig_handler);
+      signal(SIGTSTP, sig_handler);
 
     	while (1) {
     		memset (buffer.filename, 0, sizeof (buffer.filename));
