@@ -18,7 +18,7 @@
 
 /* port at which the server operates */
 #define PORT 1721
-#define SA struct sockaddr
+#define SA sockaddr
 
  /* Socket file descriptor */
  int sockfd;
